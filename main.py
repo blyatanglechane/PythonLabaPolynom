@@ -72,33 +72,42 @@ class Polynomial:
 
     def __add__(self, other):
         store_result = {}
-        if not isinstance(other, Polynomial):
+        if not (isinstance(other, Polynomial) or isinstance(other, int)):
             raise TypeError("Неверный тип данных")
         else:
-            for key, value in other.store_coef.items():
-                if key in self.store_coef.keys():
-                    store_result[key] = self.store_coef[key] + value
-                else:
-                    store_result[key] = value
-            for key, value in self.store_coef.items():
-                if not (key in store_result):
-                    store_result[key] = value
+            if isinstance(other, Polynomial):
+                for key, value in self.store_coef.items():
+                    if key in other.store_coef.keys():
+                        store_result[key] = other.store_coef[key] + value
+                    else:
+                        store_result[key] = value
+                for key, value in other.store_coef.items():
+                    if not (key in store_result):
+                        store_result[key] = value
+            else:
+                if isinstance(other, int):
+                    store_result = self.store_coef
+                    store_result[0] += other
         return Polynomial(store_result)
 
     def __radd__(self, other):
         store_result = {}
-        if not isinstance(other, Polynomial):
+        if not (isinstance(other, Polynomial) or isinstance(other, int)):
             raise TypeError("Неверный тип данных")
         else:
-            for key, value in self.store_coef.items():
-                if key in other.store_coef.keys():
-                    if other.store_coef[key] + value != 0:
+            if isinstance(other, Polynomial):
+                for key, value in self.store_coef.items():
+                    if key in other.store_coef.keys():
                         store_result[key] = other.store_coef[key] + value
-                else:
-                    store_result[key] = value
-            for key, value in other.store_coef.items():
-                if not (key in store_result):
-                    store_result[key] = value
+                    else:
+                        store_result[key] = value
+                for key, value in other.store_coef.items():
+                    if not (key in store_result):
+                        store_result[key] = value
+            else:
+                if isinstance(other, int):
+                    store_result = self.store_coef
+                    store_result[0] += other
         return Polynomial(store_result)
 
     def __neg__(self):
@@ -109,32 +118,42 @@ class Polynomial:
 
     def __sub__(self, other):
         store_result = {}
-        if not isinstance(other, Polynomial):
+        if not (isinstance(other, Polynomial) or isinstance(other, int)):
             raise TypeError("Неверный тип данных")
         else:
-            for key, value in other.store_coef.items():
-                if key in self.store_coef.keys():
-                    store_result[key] = self.store_coef[key] - value
-                else:
-                    store_result[key] = -value
-            for key, value in self.store_coef.items():
-                if not (key in store_result):
-                    store_result[key] = value
+            if isinstance(other, Polynomial):
+                for key, value in other.store_coef.items():
+                    if key in self.store_coef.keys():
+                        store_result[key] = self.store_coef[key] - value
+                    else:
+                        store_result[key] = -value
+                for key, value in self.store_coef.items():
+                    if not (key in store_result):
+                        store_result[key] = value
+            else:
+                if isinstance(other, int):
+                    store_result = self.store_coef
+                    store_result[0] -= other
         return Polynomial(store_result)
 
     def __rsub__(self, other):
         store_result = {}
-        if not isinstance(other, Polynomial):
+        if not (isinstance(other, Polynomial) or isinstance(other, int)):
             raise TypeError("Неверный тип данных")
         else:
-            for key, value in self.store_coef.items():
-                if key in other.store_coef.keys():
-                    store_result[key] = other.store_coef[key] - value
-                else:
-                    store_result[key] = -value
-            for key, value in other.store_coef.items():
-                if not (key in store_result):
-                    store_result[key] = value
+            if isinstance(other, Polynomial):
+                for key, value in other.store_coef.items():
+                    if key in self.store_coef.keys():
+                        store_result[key] = self.store_coef[key] - value
+                    else:
+                        store_result[key] = -value
+                for key, value in self.store_coef.items():
+                    if not (key in store_result):
+                        store_result[key] = value
+            else:
+                if isinstance(other, int):
+                    store_result = self.store_coef
+                    store_result[0] -= other
         return Polynomial(store_result)
 
     def __call__(self, x):
@@ -181,32 +200,44 @@ class Polynomial:
 
     def __mul__(self, other):
         store_result = {}
-        if not isinstance(other, Polynomial):
+        if not (isinstance(other, Polynomial) or isinstance(other, int)):
             raise TypeError("Неверный тип данных")
         else:
-            for key1, value1 in self.store_coef.items():
-                for key2, value2 in other.store_coef.items():
-                    res_key = key1 + key2
-                    res_value = value1 * value2
-                    if res_key in store_result.keys():
-                        store_result[res_key] += res_value
-                    else:
-                        store_result[res_key] = res_value
+            if isinstance(other, Polynomial):
+                for key1, value1 in self.store_coef.items():
+                    for key2, value2 in other.store_coef.items():
+                        res_key = key1 + key2
+                        res_value = value1 * value2
+                        if res_key in store_result.keys():
+                            store_result[res_key] += res_value
+                        else:
+                            store_result[res_key] = res_value
+            else:
+                if isinstance(other, int):
+                    store_result = self.store_coef
+                    for index, value in self.store_coef.items():
+                        store_result[index] *= other
         return Polynomial(store_result)
 
     def __rmul__(self, other):
         store_result = {}
-        if not isinstance(other, Polynomial):
+        if not (isinstance(other, Polynomial) or isinstance(other, int)):
             raise TypeError("Неверный тип данных")
         else:
-            for key1, value1 in other.store_coef.items():
-                for key2, value2 in self.store_coef.items():
-                    res_key = key1 + key2
-                    res_value = value1 * value2
-                    if res_key in store_result.keys():
-                        store_result[res_key] += res_value
-                    else:
-                        store_result[res_key] = res_value
+            if isinstance(other, Polynomial):
+                for key1, value1 in self.store_coef.items():
+                    for key2, value2 in other.store_coef.items():
+                        res_key = key1 + key2
+                        res_value = value1 * value2
+                        if res_key in store_result.keys():
+                            store_result[res_key] += res_value
+                        else:
+                            store_result[res_key] = res_value
+            else:
+                if isinstance(other, int):
+                    store_result = self.store_coef
+                    for index, value in self.store_coef.items():
+                        store_result[index] *= other
         return Polynomial(store_result)
 
     # метод, позволяющий сделать объект итеративным
@@ -231,6 +262,10 @@ pol1 = Polynomial(1)
 pol2 = Polynomial({0: -3, 2: 1, 5: 4})
 pol3 = Polynomial(0, 2, 0, 5)
 pol4 = Polynomial({0: 1, 1: 2, 2: 3})
+
+Polynomial2 = Polynomial({0: 1, 1: 2, 2: 3})
+Polynomial3 = Polynomial([7, -2, 0, 1])
+print(Polynomial2)
 
 print(pol1)
 print(pol2)
