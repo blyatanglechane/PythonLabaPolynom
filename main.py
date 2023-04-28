@@ -35,8 +35,9 @@ class Polynomial:
 
     def __str__(self):
         result_st = ""
-        size = len(self.store_coef.items())
-        for key, value in reversed(self.store_coef.items()):
+        items_list = list(self.store_coef.items())
+        size = len(items_list)
+        for key, value in reversed(items_list):
             # первый этап парсера
             if value > 0 and size != len(self.store_coef.items()):
                 result_st += "+ "
